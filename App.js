@@ -7,7 +7,7 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <Box flex={1} bg="#fff" alignItems="center" justifyContent="center">
-        <Text>Hello new project</Text>
+        <Text>Hello new project !!!</Text>
       </Box>
     </NativeBaseProvider>
   );
