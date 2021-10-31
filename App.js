@@ -1,4 +1,5 @@
 import React,{ useState } from 'react';
+import {StyleSheet} from 'react-native';
 // 1. import `NativeBaseProvider` component
 import {View,NativeBaseProvider, Text, Box, Button } from 'native-base';
 import Register from './components/RegisterComponent';
@@ -56,7 +57,7 @@ export default function App() {
 
 
 
-const styles = {
+const styles = StyleSheet.create({
 
     inside: {
 
@@ -94,4 +95,4 @@ const styles = {
       justifyContent: "center",
       alignItems: "center",
     }
-};
+});
