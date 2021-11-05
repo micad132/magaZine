@@ -1,55 +1,50 @@
 import React,{ useState } from 'react';
 import {StyleSheet} from 'react-native';
 // 1. import `NativeBaseProvider` component
-import {View,NativeBaseProvider, Text, Box, Button } from 'native-base';
-import Register from './components/RegisterComponent';
-import Login from './components/LoginComponent';
+import {View,NativeBaseProvider,Text, Box, Button } from 'native-base';
+import { NavigationContainer } from '@react-navigation/native';
+import Register from './components/Login/RegisterComponent';
+import Login from './components/Login/LoginComponent';
 
 
 
 export default function App() {
   // 2. Use at the root of your app
 
-   const [current,setCurrent] = useState('Home');
+   /*const [current,setCurrent] = useState('Home');
    const registerWindow = (
 
       <Register/>
-   );
+   );*/
 
   
 
-  const  HomeWindow  =  (
+  
+   return (
 
 
     
     <NativeBaseProvider>
-
+      <NavigationContainer>
     
     <View style={styles.homeStyle}>
-      <Box flex={1}  alignItems="center" justifyContent="center">
+      
         <Login/>
-      </Box>
+      
 
       
       
 
-      <View style={styles.buttonContainer}>
+      
+      </View>
 
-        <Text style = {{color: "white"}}>Don't have an account?</Text>
-        <Button style ={styles.inside}
-              size="sm"
-              variant="link"  onPress={ () => setCurrent(registerWindow)}
-            >
-              <Text style={styles.fontColor}>REGISTER</Text>
-        </Button>
-      </View>
-      </View>
+      </NavigationContainer>
     </NativeBaseProvider>
     
   );
 
 
-    return current === 'Home' ? HomeWindow : current;
+    //return current === 'Home' ? HomeWindow : current;
 }
 
 
@@ -59,7 +54,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
 
-    inside: {
+    buttonStyle: {
 
         color: "white" ,
         backgroundColor: "yellow",
@@ -71,7 +66,7 @@ const styles = StyleSheet.create({
 
     },
 
-    fontColor: {
+    buttonText: {
       color: "black",
       
      
