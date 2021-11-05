@@ -27,16 +27,16 @@ export default function App() {
     <NativeBaseProvider>
       <NavigationContainer>
     
-    <View style={styles.homeStyle}>
+          <View style={styles.homeStyle}>
       
-        <Login/>
-      
-
-      
+              <Login/>
       
 
       
-      </View>
+      
+
+      
+          </View>
 
       </NavigationContainer>
     </NativeBaseProvider>
