@@ -14,6 +14,7 @@ import {
   IconButton,
   HStack,
   Divider,
+  
 } from 'native-base';
 
 const Login = () => {
@@ -54,6 +55,8 @@ const Login = () => {
           
           
         </VStack>
+
+        <Button title="Login"/>
       </Box>
     
   );
