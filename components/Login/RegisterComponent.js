@@ -16,9 +16,9 @@ import {
   Divider,
 } from 'native-base';
 
-const Register = ()  => {
+const RegisterScreen = ({navigation})  => {
   return (
-    <NativeBaseProvider>
+   
       <Box safeArea flex={1} p="2" w="90%" mx="auto" py="8">
         <Heading size="lg" color="coolGray.800" fontWeight="600">
           Welcome
@@ -54,9 +54,9 @@ const Register = ()  => {
           </Button>
         </VStack>
       </Box>
-    </NativeBaseProvider>
+    
   );
 }
 
 
-export default Register;
+export default RegisterScreen;

@@ -3,8 +3,7 @@ import {StyleSheet} from 'react-native';
 // 1. import `NativeBaseProvider` component
 import {View,NativeBaseProvider,Text, Box, Button, Stack } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
-import Register from './components/Login/RegisterComponent';
-import Login from './components/Login/LoginComponent';
+import Login from './components/Login';
 
 
 
@@ -28,7 +27,7 @@ export default function App() {
       <NavigationContainer>
         
           
-            <View style={styles.homeStyle}>
+            
         
                 <Login/>
         
@@ -37,7 +36,7 @@ export default function App() {
         
 
         
-            </View>
+            
          
       </NavigationContainer>
     </NativeBaseProvider>

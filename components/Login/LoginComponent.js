@@ -19,7 +19,7 @@ import {
 } from 'native-base';
 
 
-function Login ({navigation}) {
+function LoginScreen ({navigation}) {
 
 
 
@@ -29,7 +29,8 @@ function Login ({navigation}) {
   const [login,setLogin] = useState("user");
   return (
     
-      <Box  safeArea flex={1} justifyContent="center" alignItems="center" p="2" py="8"  mx="auto" style={{width:"70%",height:"100%",position:"relative",backgroundColor:"rgb(41,54,63)"}} >
+    <Box style={{width:"100%",height:"100%",backgroundColor:"rgb(41,54,63)"}}>
+      <Box  safeArea flex={1} justifyContent="center" alignItems="center" p="2" py="8"  mx="auto" style={{width:"70%",height:"100%",position:"relative"}} >
         
         <View style={{width: "100%",marginBottom: 50}}>
         <Heading size="lg" fontWeight="600" color="#fff" style={{textAlign:"center"}}>
@@ -81,17 +82,18 @@ function Login ({navigation}) {
           <Button style ={styles.buttonRegisterStyle}
                 size="sm"
                 variant="link"  
-                onPress={ () => navigation.navigate("Register")}
+                onPress={ () => navigation.navigate('Register')}
               >
                 <Text style={styles.buttonText}>REGISTER</Text>
           </Button>
         </View>
       </Box>
+      </Box>
     
   );
 }
 
-export default Login;
+export default LoginScreen;
 
 
 const styles = StyleSheet.create({

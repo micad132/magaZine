@@ -1,7 +1,7 @@
-import React from 'React';
+import React from 'react';
 
-import Login from './LoginComponent';
-import Register from './RegisterComponent';
+import LoginScreen from './LoginComponent';
+import RegisterScreen from './RegisterComponent';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -18,13 +18,14 @@ export default function Login() {
 
     return (
 
-        <NavigationContainer>
+        
             <Stack.Navigator initialRouteName="Login">
                 <Stack.Screen
 
                     
                     name="Login"
-                    component={Login}
+                    component={LoginScreen}
+                    options={{headerShown: false}}
 
                     >
 
@@ -35,7 +36,8 @@ export default function Login() {
                 <Stack.Screen
 
                     name="Register"
-                    component={Register}
+                    component={RegisterScreen}
+                    options={{headerShown: false}}
 
 
                 />
@@ -46,7 +48,7 @@ export default function Login() {
 
 
 
-        </NavigationContainer>
+       
 
 
 
