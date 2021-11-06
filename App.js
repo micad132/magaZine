@@ -1,7 +1,7 @@
 import React,{ useState } from 'react';
 import {StyleSheet} from 'react-native';
 // 1. import `NativeBaseProvider` component
-import {View,NativeBaseProvider,Text, Box, Button } from 'native-base';
+import {View,NativeBaseProvider,Text, Box, Button, Stack } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import Register from './components/Login/RegisterComponent';
 import Login from './components/Login/LoginComponent';
@@ -26,18 +26,19 @@ export default function App() {
     
     <NativeBaseProvider>
       <NavigationContainer>
-    
-          <View style={styles.homeStyle}>
-      
-              <Login/>
-      
+        
+          
+            <View style={styles.homeStyle}>
+        
+                <Login/>
+        
 
-      
-      
+        
+        
 
-      
-          </View>
-
+        
+            </View>
+         
       </NavigationContainer>
     </NativeBaseProvider>
     

@@ -19,8 +19,12 @@ import {
 } from 'native-base';
 import { padding } from 'styled-system';
 
-const Login = () => {
+const Login = ({navigation}) => {
 
+
+
+  
+  
 
   const [login,setLogin] = useState("user");
   return (
@@ -77,6 +81,7 @@ const Login = () => {
           <Button style ={styles.buttonRegisterStyle}
                 size="sm"
                 variant="link"  
+                onPress={ () => navigation.navigate("Register")}
               >
                 <Text style={styles.buttonText}>REGISTER</Text>
           </Button>
