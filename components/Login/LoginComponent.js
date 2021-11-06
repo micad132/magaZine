@@ -17,9 +17,9 @@ import {
   View
   
 } from 'native-base';
-import { padding } from 'styled-system';
 
-const Login = ({navigation}) => {
+
+function Login ({navigation}) {
 
 
 
