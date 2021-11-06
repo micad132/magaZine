@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import {
   NativeBaseProvider,
   Box,
@@ -19,13 +20,12 @@ import {
 
 function LoginScreen({ navigation }) {
   const [login, setLogin] = useState("user");
+  const [Show, setShow] = useState(false);
+  const handleClick = () => setShow(!Show);
+
   return (
-    <Box
-      style={{
-        width: "100%",
-        height: "100%",
-        backgroundColor: "rgb(41,54,63)",
-      }}
+    <Box  w="100%" h="100%" bgColor="rgb(41,54,63)"
+      
     >
       <Box
         safeArea
@@ -35,14 +35,18 @@ function LoginScreen({ navigation }) {
         p="2"
         py="8"
         mx="auto"
-        style={{ width: "70%", height: "100%", position: "relative" }}
+        w="70%"
+        h="100%"
+        position="relative"
+        
       >
-        <View style={{ width: "100%", marginBottom: 50 }}>
+        <View  w="100%" mb="50" >
           <Heading
             size="lg"
             fontWeight="600"
             color="#fff"
-            style={{ textAlign: "center" }}
+            textAlign="center"
+            
           >
             Welcome to MagaZine
           </Heading>
@@ -51,12 +55,13 @@ function LoginScreen({ navigation }) {
             color="#fff"
             fontWeight="medium"
             size="xs"
-            style={{ textAlign: "center" }}
+            textAlign="center"
+           
           >
             Login to continue!
           </Heading>
-          <VStack space={3} mt="5" style={{ width: "100%" }}>
-            <FormControl style={{ width: "100%" }}>
+          <VStack space={3} mt="5" w="100%" >
+            <FormControl  w="100%" >
               <FormControl.Label
                 _text={{
                   color: "#fff",
@@ -67,7 +72,10 @@ function LoginScreen({ navigation }) {
                 Login
               </FormControl.Label>
               <Input
-                style={{ width: "100%", color: "#fff" }}
+                placeholder="Login"
+                w="100%"
+                color="#fff"
+                
                 onChangeText={(val) => setLogin(val)}
               />
             </FormControl>
@@ -81,7 +89,24 @@ function LoginScreen({ navigation }) {
               >
                 Password
               </FormControl.Label>
-              <Input type="password" style={{ color: "#fff" }} />
+              <Input type={Show ? "text" : "password"} placeholder="Password" color="#fff" InputRightElement={
+
+                <Icon
+                  onPress ={handleClick}
+                as={
+                  Show ? (
+                    <MaterialIcons name="visibility" />
+                  ) : (
+                    <MaterialIcons name="visibility-off" />
+                  )
+                }
+                size={5}
+                mr="2"
+                color="white"
+
+
+                />
+              }  />
             </FormControl>
           </VStack>
           <View style={styles.loginBtnContainer}>
@@ -100,7 +125,7 @@ function LoginScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <Text style={{ color: "white" }}>Don't have an account?</Text>
+          <Text color="#fff" >Don't have an account?</Text>
           <Button
             style={styles.buttonRegisterStyle}
             size="sm"

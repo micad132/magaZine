@@ -19,14 +19,15 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <Box
-      mt="50"
-      my="auto"
-      mx="auto"
-      p="2"
+      
+     
       w="100%"
       h="100%"
-      py="8"
-      style={{ backgroundColor: "rgb(41,54,63)" }}
+      flex={1}
+      alignItems="center"
+      justifyContent="center"
+      bgColor="rgb(41,54,63)"
+      
     >
       <Heading size="lg" color="white" fontWeight="600" textAlign="center">
         Welcome to register form
@@ -136,7 +137,8 @@ const RegisterScreen = ({ navigation }) => {
           mt="10"
           colorScheme="indigo"
           _text={{ color: "white" }}
-          style={{ backgroundColor: "rgb(110,217,161)" }}
+          bgColor="rgb(110,217,161)"
+          
         >
           Sign up
         </Button>
