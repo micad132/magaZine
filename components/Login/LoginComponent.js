@@ -24,9 +24,7 @@ function LoginScreen({ navigation }) {
   const handleClick = () => setShow(!Show);
 
   return (
-    <Box  w="100%" h="100%" bgColor="rgb(41,54,63)"
-      
-    >
+    <Box w="100%" h="100%" bgColor="rgb(41,54,63)">
       <Box
         safeArea
         flex={1}
@@ -38,16 +36,9 @@ function LoginScreen({ navigation }) {
         w="70%"
         h="100%"
         position="relative"
-        
       >
-        <View  w="100%" mb="50" >
-          <Heading
-            size="lg"
-            fontWeight="600"
-            color="#fff"
-            textAlign="center"
-            
-          >
+        <View w="100%" mb="50">
+          <Heading size="lg" fontWeight="600" color="#fff" textAlign="center">
             Welcome to MagaZine
           </Heading>
           <Heading
@@ -56,12 +47,11 @@ function LoginScreen({ navigation }) {
             fontWeight="medium"
             size="xs"
             textAlign="center"
-           
           >
             Login to continue!
           </Heading>
-          <VStack space={3} mt="5" w="100%" >
-            <FormControl  w="100%" >
+          <VStack space={3} mt="5" w="100%">
+            <FormControl w="100%">
               <FormControl.Label
                 _text={{
                   color: "#fff",
@@ -75,7 +65,6 @@ function LoginScreen({ navigation }) {
                 placeholder="Login"
                 w="100%"
                 color="#fff"
-                
                 onChangeText={(val) => setLogin(val)}
               />
             </FormControl>
@@ -89,24 +78,26 @@ function LoginScreen({ navigation }) {
               >
                 Password
               </FormControl.Label>
-              <Input type={Show ? "text" : "password"} placeholder="Password" color="#fff" InputRightElement={
-
-                <Icon
-                  onPress ={handleClick}
-                as={
-                  Show ? (
-                    <MaterialIcons name="visibility" />
-                  ) : (
-                    <MaterialIcons name="visibility-off" />
-                  )
+              <Input
+                type={Show ? "text" : "password"}
+                placeholder="Password"
+                color="#fff"
+                InputRightElement={
+                  <Icon
+                    onPress={handleClick}
+                    as={
+                      Show ? (
+                        <MaterialIcons name="visibility" />
+                      ) : (
+                        <MaterialIcons name="visibility-off" />
+                      )
+                    }
+                    size={5}
+                    mr="2"
+                    color="white"
+                  />
                 }
-                size={5}
-                mr="2"
-                color="white"
-
-
-                />
-              }  />
+              />
             </FormControl>
           </VStack>
           <View style={styles.loginBtnContainer}>
@@ -125,7 +116,7 @@ function LoginScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <Text color="#fff" >Don't have an account?</Text>
+          <Text color="#fff">Don't have an account?</Text>
           <Button
             style={styles.buttonRegisterStyle}
             size="sm"

@@ -19,17 +19,14 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <Box
-      
-     
       w="100%"
       h="100%"
       flex={1}
       alignItems="center"
       justifyContent="center"
       bgColor="rgb(41,54,63)"
-      
     >
-      <Heading size="lg" color="white" fontWeight="600" textAlign="center">
+      <Heading size="lg" color="white" fontWeight="400" textAlign="center">
         Welcome to register form
       </Heading>
       <Heading
@@ -42,6 +39,25 @@ const RegisterScreen = ({ navigation }) => {
         Provide your data and continue
       </Heading>
       <VStack mx="auto" w="70%" space={3} mt="5">
+        <FormControl>
+          <FormControl.Label
+            _text={{ color: "white", fontSize: "xs", fontWeight: 500 }}
+          >
+            Login
+          </FormControl.Label>
+          <Input
+            color="white"
+            placeholder="Login"
+            InputLeftElement={
+              <Icon
+                as={<MaterialIcons name="person" />}
+                size={5}
+                ml="2"
+                color="white"
+              />
+            }
+          />
+        </FormControl>
         <FormControl>
           <FormControl.Label
             _text={{ color: "white", fontSize: "xs", fontWeight: 500 }}
@@ -138,7 +154,6 @@ const RegisterScreen = ({ navigation }) => {
           colorScheme="indigo"
           _text={{ color: "white" }}
           bgColor="rgb(110,217,161)"
-          
         >
           Sign up
         </Button>
