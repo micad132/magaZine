@@ -32,7 +32,7 @@ function ResetInputs({navigation}) {
 }
 
 
-function LoginScreen({ navigation }) {
+const LoginScreen = ({ navigation }) => {
   const [name, setName] = useState("user");
   const [Show, setShow] = useState(false);
   const [login,setLogin] = useState('');
@@ -123,6 +123,14 @@ function LoginScreen({ navigation }) {
                 placeholder="Login"
                 w="100%"
                 color="#fff"
+                InputLeftElement={
+                  <Icon
+                    as={<MaterialIcons name="person" />}
+                    size={5}
+                    ml="2"
+                    color="white"
+                  />
+                }
                 
                 
               />
@@ -204,7 +212,7 @@ function LoginScreen({ navigation }) {
       </Box>
     </Box>
   );
-}
+};
 
 
 export default LoginScreen;
