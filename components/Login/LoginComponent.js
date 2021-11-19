@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useRef} from "react";
 import { StyleSheet } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   NativeBaseProvider,
@@ -18,10 +19,49 @@ import {
   View,
 } from "native-base";
 
+
+function ResetInputs({navigation}) {
+
+  // React.useEffect(()=> {
+  //   setLogin('user');
+  // },[]);
+
+  
+
+  
+}
+
+
 function LoginScreen({ navigation }) {
-  const [login, setLogin] = useState("user");
+  const [name, setName] = useState("user");
   const [Show, setShow] = useState(false);
+  const [login,setLogin] = useState('');
+  const [password,setPassword] = useState('');
   const handleClick = () => setShow(!Show);
+  const loginInput = useRef();
+  const passwordInput = useRef();
+  
+
+  
+
+  
+
+ useFocusEffect(
+    React.useCallback(()=> {
+
+        
+        //alert(loginInput.current.value);
+        //passwordInput.current.value = 'siema';
+      //clear();
+
+        return() => {
+        setName('user');
+        setLogin('');
+        setPassword('');
+        
+
+        }
+    },[]));
 
   return (
     <Box  w="100%" h="100%" bgColor="rgb(41,54,63)"
@@ -72,11 +112,19 @@ function LoginScreen({ navigation }) {
                 Login
               </FormControl.Label>
               <Input
+                ref={loginInput}
+                value ={login}
+                onChangeText={(val) => 
+                  {
+                    
+                    setName(val)
+                    setLogin(loginInput.current.text)
+                  }}
                 placeholder="Login"
                 w="100%"
                 color="#fff"
                 
-                onChangeText={(val) => setLogin(val)}
+                
               />
             </FormControl>
             <FormControl>
@@ -89,7 +137,16 @@ function LoginScreen({ navigation }) {
               >
                 Password
               </FormControl.Label>
-              <Input type={Show ? "text" : "password"} placeholder="Password" color="#fff" InputRightElement={
+              <Input  
+              ref={passwordInput}
+              value={password}       
+              type={Show ? "text" : "password"}     
+              placeholder="Password" 
+              color="#fff"
+              onChangeText={ ()=> 
+                setPassword(passwordInput.current.text)
+              }       
+              InputRightElement={
 
                 <Icon
                   onPress ={handleClick}
@@ -106,7 +163,16 @@ function LoginScreen({ navigation }) {
 
 
                 />
-              }  />
+              }  
+              InputLeftElement={
+                <Icon
+                  as={<MaterialIcons name="lock" />}
+                  size={5}
+                  ml="2"
+                  color="white"
+                />
+              }
+            />
             </FormControl>
           </VStack>
           <View style={styles.loginBtnContainer}>
@@ -117,7 +183,7 @@ function LoginScreen({ navigation }) {
               ]}
             >
               {" "}
-              Hello {login}!
+              Hello {name}!
             </Text>
             <Button style={styles.buttonLoginStyle}>
               <Text style={styles.buttonText}> LOGIN</Text>
@@ -139,6 +205,7 @@ function LoginScreen({ navigation }) {
     </Box>
   );
 }
+
 
 export default LoginScreen;
 

@@ -44,7 +44,7 @@ const RegisterScreen = ({ navigation }) => {
       <VStack mx="auto" w="70%" space={3} mt="5">
         <FormControl>
           <FormControl.Label
-            _text={{ color: "white", fontSize: "xs", fontWeight: 500 }}
+            _text={{ color: "white",fontSize: "xs", fontWeight: 500 }}
           >
             Email
           </FormControl.Label>
