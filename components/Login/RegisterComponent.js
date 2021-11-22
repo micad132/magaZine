@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import {Alert} from 'react-native';
+=======
+import React, { useState, useRef } from "react";
+import { useFocusEffect } from '@react-navigation/native';
+>>>>>>> autoryzacja
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   NativeBaseProvider,
@@ -17,6 +22,7 @@ import {
 const RegisterScreen = ({ navigation }) => {
   const [Show, setShow] = useState(false);
   const handleClick = () => setShow(!Show);
+<<<<<<< HEAD
   const AlertMsg = () => {
 
     Alert.alert('User registered!');
@@ -26,6 +32,29 @@ const RegisterScreen = ({ navigation }) => {
 
     
   }
+=======
+  const [login,setLogin] = useState('');
+  const [password,setPassword] = useState('');
+  const loginInput = useRef();
+  const passwordInput = useRef();
+
+  useFocusEffect(
+    React.useCallback(()=> {
+
+        
+        //alert(loginInput.current.value);
+        //passwordInput.current.value = 'siema';
+      //clear();
+
+        return() => {
+        
+        setLogin('');
+        setPassword('');
+        
+
+        }
+    },[]));
+>>>>>>> autoryzacja
 
   return (
     <Box
@@ -51,9 +80,10 @@ const RegisterScreen = ({ navigation }) => {
       <VStack mx="auto" w="70%" space={3} mt="5">
         <FormControl>
           <FormControl.Label
-            _text={{ color: "white", fontSize: "xs", fontWeight: 500 }}
+            _text={{ color: "white",fontSize: "xs", fontWeight: 500 }}
           >
             Login
+<<<<<<< HEAD
           </FormControl.Label>
           <Input
             color="white"
@@ -73,13 +103,21 @@ const RegisterScreen = ({ navigation }) => {
             _text={{ color: "white", fontSize: "xs", fontWeight: 500 }}
           >
             Email
+=======
+>>>>>>> autoryzacja
           </FormControl.Label>
           <Input
             color="white"
-            placeholder="Email"
+            placeholder="Login"
+            ref={loginInput}
+            value ={login}
+            onChangeText={() => 
+              {  
+                setLogin(loginInput.current.text)
+              }}
             InputLeftElement={
               <Icon
-                as={<MaterialIcons name="email" />}
+                as={<MaterialIcons name="person" />}
                 size={5}
                 ml="2"
                 color="white"
@@ -97,6 +135,14 @@ const RegisterScreen = ({ navigation }) => {
             type={Show ? "text" : "password"}
             overflow="visible"
             color="white"
+            ref={passwordInput}
+            value={password}
+            onChangeText={() => 
+              {
+                
+                
+                setPassword(passwordInput.current.text)
+              }}
             InputLeftElement={
               <Icon
                 as={<MaterialIcons name="lock" />}
@@ -132,6 +178,14 @@ const RegisterScreen = ({ navigation }) => {
           <Input
             type={Show ? "text" : "password"}
             overflow="visible"
+            ref={passwordInput}
+            value={password}
+            onChangeText={() => 
+              {
+                
+                
+                setPassword(passwordInput.current.text)
+              }}
             color="white"
             InputLeftElement={
               <Icon

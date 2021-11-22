@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useRef} from "react";
 import { StyleSheet } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   NativeBaseProvider,
@@ -18,10 +19,49 @@ import {
   View,
 } from "native-base";
 
-function LoginScreen({ navigation }) {
-  const [login, setLogin] = useState("user");
+
+function ResetInputs({navigation}) {
+
+  // React.useEffect(()=> {
+  //   setLogin('user');
+  // },[]);
+
+  
+
+  
+}
+
+
+const LoginScreen = ({ navigation }) => {
+  const [name, setName] = useState("user");
   const [Show, setShow] = useState(false);
+  const [login,setLogin] = useState('');
+  const [password,setPassword] = useState('');
   const handleClick = () => setShow(!Show);
+  const loginInput = useRef();
+  const passwordInput = useRef();
+  
+
+  
+
+  
+
+ useFocusEffect(
+    React.useCallback(()=> {
+
+        
+        //alert(loginInput.current.value);
+        //passwordInput.current.value = 'siema';
+      //clear();
+
+        return() => {
+        setName('user');
+        setLogin('');
+        setPassword('');
+        
+
+        }
+    },[]));
 
   return (
     <Box w="100%" h="100%" bgColor="rgb(41,54,63)">
@@ -62,10 +102,31 @@ function LoginScreen({ navigation }) {
                 Login
               </FormControl.Label>
               <Input
+                ref={loginInput}
+                value ={login}
+                onChangeText={(val) => 
+                  {
+                    
+                    setName(val)
+                    setLogin(loginInput.current.text)
+                  }}
                 placeholder="Login"
                 w="100%"
                 color="#fff"
+<<<<<<< HEAD
                 onChangeText={(val) => setLogin(val)}
+=======
+                InputLeftElement={
+                  <Icon
+                    as={<MaterialIcons name="person" />}
+                    size={5}
+                    ml="2"
+                    color="white"
+                  />
+                }
+                
+                
+>>>>>>> autoryzacja
               />
             </FormControl>
             <FormControl>
@@ -78,6 +139,7 @@ function LoginScreen({ navigation }) {
               >
                 Password
               </FormControl.Label>
+<<<<<<< HEAD
               <Input
                 type={Show ? "text" : "password"}
                 placeholder="Password"
@@ -98,6 +160,44 @@ function LoginScreen({ navigation }) {
                   />
                 }
               />
+=======
+              <Input  
+              ref={passwordInput}
+              value={password}       
+              type={Show ? "text" : "password"}     
+              placeholder="Password" 
+              color="#fff"
+              onChangeText={ ()=> 
+                setPassword(passwordInput.current.text)
+              }       
+              InputRightElement={
+
+                <Icon
+                  onPress ={handleClick}
+                as={
+                  Show ? (
+                    <MaterialIcons name="visibility" />
+                  ) : (
+                    <MaterialIcons name="visibility-off" />
+                  )
+                }
+                size={5}
+                mr="2"
+                color="white"
+
+
+                />
+              }  
+              InputLeftElement={
+                <Icon
+                  as={<MaterialIcons name="lock" />}
+                  size={5}
+                  ml="2"
+                  color="white"
+                />
+              }
+            />
+>>>>>>> autoryzacja
             </FormControl>
           </VStack>
           <View style={styles.loginBtnContainer}>
@@ -108,7 +208,7 @@ function LoginScreen({ navigation }) {
               ]}
             >
               {" "}
-              Hello {login}!
+              Hello {name}!
             </Text>
             <Button
               style={styles.buttonLoginStyle}
@@ -132,7 +232,8 @@ function LoginScreen({ navigation }) {
       </Box>
     </Box>
   );
-}
+};
+
 
 export default LoginScreen;
 
