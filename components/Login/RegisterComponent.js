@@ -154,6 +154,7 @@ const RegisterScreen = ({ navigation }) => {
           colorScheme="indigo"
           _text={{ color: "white" }}
           bgColor="rgb(110,217,161)"
+          onPress={() => navigation.navigate("Login")}
         >
           Sign up
         </Button>

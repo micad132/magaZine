@@ -110,7 +110,10 @@ function LoginScreen({ navigation }) {
               {" "}
               Hello {login}!
             </Text>
-            <Button style={styles.buttonLoginStyle}>
+            <Button
+              style={styles.buttonLoginStyle}
+              onPress={() => navigation.navigate("HomeScreen")}
+            >
               <Text style={styles.buttonText}> LOGIN</Text>
             </Button>
           </View>
