@@ -50,9 +50,7 @@ const LoginScreen = ({ navigation }) => {
     React.useCallback(()=> {
 
         
-        //alert(loginInput.current.value);
-        //passwordInput.current.value = 'siema';
-      //clear();
+        
 
         return() => {
         setName('user');
@@ -107,26 +105,13 @@ const LoginScreen = ({ navigation }) => {
                 onChangeText={(val) => 
                   {
                     
-                    setName(val)
-                    setLogin(loginInput.current.text)
+                    setName(val);
+                    setLogin(loginInput.current.text);
                   }}
                 placeholder="Login"
                 w="100%"
                 color="#fff"
-<<<<<<< HEAD
-                onChangeText={(val) => setLogin(val)}
-=======
-                InputLeftElement={
-                  <Icon
-                    as={<MaterialIcons name="person" />}
-                    size={5}
-                    ml="2"
-                    color="white"
-                  />
-                }
                 
-                
->>>>>>> autoryzacja
               />
             </FormControl>
             <FormControl>
@@ -139,11 +124,16 @@ const LoginScreen = ({ navigation }) => {
               >
                 Password
               </FormControl.Label>
-<<<<<<< HEAD
               <Input
                 type={Show ? "text" : "password"}
                 placeholder="Password"
                 color="#fff"
+                ref={passwordInput}
+                value={password}
+                onChangeText={()=>{
+
+                  setPassword(passwordInput.current.text);
+                }}
                 InputRightElement={
                   <Icon
                     onPress={handleClick}
@@ -160,44 +150,6 @@ const LoginScreen = ({ navigation }) => {
                   />
                 }
               />
-=======
-              <Input  
-              ref={passwordInput}
-              value={password}       
-              type={Show ? "text" : "password"}     
-              placeholder="Password" 
-              color="#fff"
-              onChangeText={ ()=> 
-                setPassword(passwordInput.current.text)
-              }       
-              InputRightElement={
-
-                <Icon
-                  onPress ={handleClick}
-                as={
-                  Show ? (
-                    <MaterialIcons name="visibility" />
-                  ) : (
-                    <MaterialIcons name="visibility-off" />
-                  )
-                }
-                size={5}
-                mr="2"
-                color="white"
-
-
-                />
-              }  
-              InputLeftElement={
-                <Icon
-                  as={<MaterialIcons name="lock" />}
-                  size={5}
-                  ml="2"
-                  color="white"
-                />
-              }
-            />
->>>>>>> autoryzacja
             </FormControl>
           </VStack>
           <View style={styles.loginBtnContainer}>
