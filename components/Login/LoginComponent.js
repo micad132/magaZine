@@ -3,33 +3,17 @@ import { StyleSheet } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
 import { MaterialIcons } from "@expo/vector-icons";
 import {
-  NativeBaseProvider,
   Box,
   Text,
   Heading,
   VStack,
   FormControl,
   Input,
-  Link,
   Button,
   Icon,
-  IconButton,
-  HStack,
-  Divider,
   View,
 } from "native-base";
 
-
-function ResetInputs({navigation}) {
-
-  // React.useEffect(()=> {
-  //   setLogin('user');
-  // },[]);
-
-  
-
-  
-}
 
 
 const LoginScreen = ({ navigation }) => {
@@ -42,9 +26,7 @@ const LoginScreen = ({ navigation }) => {
   const passwordInput = useRef();
   
 
-  
 
-  
 
  useFocusEffect(
     React.useCallback(()=> {
