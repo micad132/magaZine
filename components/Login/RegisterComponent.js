@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Alert} from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   NativeBaseProvider,
@@ -16,6 +17,15 @@ import {
 const RegisterScreen = ({ navigation }) => {
   const [Show, setShow] = useState(false);
   const handleClick = () => setShow(!Show);
+  const AlertMsg = () => {
+
+    Alert.alert('User registered!');
+  }
+
+  const Validation = () => {
+
+    
+  }
 
   return (
     <Box
@@ -154,8 +164,14 @@ const RegisterScreen = ({ navigation }) => {
           colorScheme="indigo"
           _text={{ color: "white" }}
           bgColor="rgb(110,217,161)"
-          onPress={() => navigation.navigate("Login")}
-        >
+          onPress={() => 
+            {
+              
+              AlertMsg();
+              navigation.navigate("Login");
+            
+            }
+          }>
           Sign up
         </Button>
       </VStack>

@@ -104,7 +104,7 @@ function LoginScreen({ navigation }) {
             <Text
               style={[
                 styles.buttonText,
-                { textAlign: "center", marginBottom: 10 },
+                { textAlign: "center", marginBottom: 10,fontSize: 16 },
               ]}
             >
               {" "}
