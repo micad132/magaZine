@@ -1,7 +1,10 @@
 import { Text,Box } from "native-base";
 import React from "react";
 
+
 const ProfileScreen = () =>{
+
+    
     return(
     
     
