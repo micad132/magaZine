@@ -13,7 +13,7 @@ const HomeScreen = ({route,navigation}) =>{
         
         <Box w="100%" h="100%" bgColor="rgb(41,54,63)">
              
-            <Text color="#fff" mx="5" my="10">Hello {user} </Text>
+            <Text color="#fff" mx="5" my="10" textAlign="center" fontWeight="bold" fontSize="xl">Hello {user}! You are logged in. </Text>
         </Box>
         
     );
