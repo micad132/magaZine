@@ -8,12 +8,13 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 const Tab = createBottomTabNavigator();
 
-const MainScreen = ({ navigation }) => {
+const MainScreen = ({ navigation,route }) => {
   return (
     <Tab.Navigator initialRouteName="HomeScreen">
       <Tab.Screen
         name="Home"
         component={HomeScreen}
+        initialParams={{user: route.params.user}}
         options={{ tabBarShowLabel: false, tabBarIcon: () => <MaterialCommunityIcons name="home" size={25} /> }}
       />
       <Tab.Screen

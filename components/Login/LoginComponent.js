@@ -146,7 +146,7 @@ const LoginScreen = ({ navigation }) => {
             </Text>
             <Button
               style={styles.buttonLoginStyle}
-              onPress={() => navigation.navigate("HomeScreen")}
+              onPress={() => navigation.navigate("MainScreen",{user: name})}
             >
               <Text style={styles.buttonText}> LOGIN</Text>
             </Button>

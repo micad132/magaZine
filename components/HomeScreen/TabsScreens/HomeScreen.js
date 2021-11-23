@@ -1,11 +1,21 @@
-import { Text } from "native-base";
+import { Text,Box } from "native-base";
 import React from "react";
+import {Alert} from 'react-native';
 
 
 
-const HomeScreen = ({navigation}) =>{
+const HomeScreen = ({route,navigation}) =>{
+
+    const {user} = route.params;
+    
     return(
-        <Text mx="5" my="10">HomeScreen</Text>
+
+        
+        <Box w="100%" h="100%" bgColor="rgb(41,54,63)">
+             
+            <Text color="#fff" mx="5" my="10">Hello {user} </Text>
+        </Box>
+        
     );
 
 }
