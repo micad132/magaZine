@@ -32,7 +32,7 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        //navigation.navigate("MainScreen", { user: name });
+        navigation.navigate("MainScreen", { user: name });
       }
     });
     return unsubscribe;

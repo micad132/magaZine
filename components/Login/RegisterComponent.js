@@ -27,11 +27,27 @@ const RegisterScreen = ({ navigation }) => {
   const loginInput = useRef();
   const passwordInput = useRef();
   const handleClick = () => setShow(!Show);
-  const AlertMsg = () => {
-    Alert.alert("User registered!");
-  };
+
   const handleSignUp = () => {
-    createUserWithEmailAndPassword(auth,email,password);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => alert("user registered!"), navigation.navigate("Login"))
+      .catch((error) => {
+        alert(error.message);
+        switch (error.code) {
+          case "auth/invalid-email":
+            alert("Invalid email!");
+            break;
+          case "auth/internal-error":
+            alert("Internal error!");
+            break;
+          case "auth/email-already-in-use":
+            alert("Email already in use!");
+            break;
+          case "auth/weak-password":
+            alert("Password should be at least 6 characters!");
+            break;
+        }
+      });
   };
   const Validation = () => {};
 
@@ -128,9 +144,6 @@ const RegisterScreen = ({ navigation }) => {
             overflow="visible"
             ref={passwordInput}
             value={password}
-            onChangeText={() => {
-              setPassword(passwordInput.current.text);
-            }}
             color="white"
             InputLeftElement={
               <Icon
@@ -164,7 +177,6 @@ const RegisterScreen = ({ navigation }) => {
           _text={{ color: "white" }}
           bgColor="rgb(110,217,161)"
           onPress={() => {
-            AlertMsg();
             handleSignUp();
           }}
         >
