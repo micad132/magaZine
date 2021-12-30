@@ -1,33 +1,93 @@
 import { Text, Box, FlatList, Modal, Button } from "native-base";
 import { TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 import { Alert } from "react-native";
+import { auth,colref} from "../../../firebase";
+import {getDocs} from 'firebase/firestore';
 
 const HomeScreen = ({ route, navigation }) => {
   const { user } = route.params;
   const [showModal, setShowModal] = useState(false);
-  const [userData, setUserData] = useState({});
-  const data = [
-    {
-      id: "1",
-      name: "BigBox",
-      weight: "100",
-    },
-    {
-      id: "2",
-      name: "TV",
-      weight: "50",
-    },
-    {
-      id: "3",
-      name: "Phones",
-      weight: "200",
-    },
-  ];
+  const [itemData, setItemData] = useState({});
+  const [items,setItems] = useState([]);
+  const [ifAdd,setIfAdd] = useState(false);
+
+  
+
+  
+
+  useEffect(() => {
+      getDocs(colref)
+      .then(snapshot => {
+        
+      
+      snapshot.docs.forEach(doc => {
+
+
+
+            // if(items.length==0)
+            // {
+            //   items.push({ id: doc.id,...doc.data()})
+            // }
+
+        
+            //tems.forEach( (item,index) => {
+
+          //     if(item.id == doc.id  )
+          //     {
+          //        items.push({ id: doc.id,...doc.data()})
+          //      }
+
+
+          //  })
+
+          // items.forEach( (item,index)=> {
+
+
+          //     console.log(item.id,doc.id);
+          //     if(item.id != doc.id)
+          //     {
+          //       
+          //     }
+              
+          // })
+
+          if(ifAdd == false)
+          {
+            items.push({ id: doc.id,...doc.data()})
+          }
+          
+          
+        
+        
+        
+      })
+
+      ifAdd = true;
+      
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+  }, []);
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("Login");
+      })
+      .catch((error) => alert(error.message));
+  };
+  
+
+  
 
   return (
     <Box w="100%" h="100%" bgColor="rgb(41,54,63)">
+      <TouchableOpacity onPress={handleSignOut}>
+        <Text color="#fff">Sign Out</Text>
+      </TouchableOpacity>
       <Text
         color="#fff"
         mx="5"
@@ -37,6 +97,7 @@ const HomeScreen = ({ route, navigation }) => {
         fontSize="xl"
       >
         Hello {user}! You are logged in.{" "}
+        
       </Text>
       <Text color="#fff" textAlign="center" fontSize="16">
         {" "}
@@ -44,31 +105,35 @@ const HomeScreen = ({ route, navigation }) => {
       </Text>
       <Text color="#fff" textAlign="center" fontSize="12">
         Click to get details:
+        
       </Text>
+
       <FlatList
-        data={data}
+        data={items}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
               setShowModal(true);
-              setUserData(item);
+              setItemData(item);
             }}
           >
             <Text color="#fff" textAlign="center" mt="5">
-              {item.name}
+              {item.Name}
+              
             </Text>
           </TouchableOpacity>
         )}
       />
+      
 
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400">
           <Modal.CloseButton />
           <Modal.Header>Item details:</Modal.Header>
           <Modal.Body>
-            <Text fontSize="xl">Item id: {userData.id}</Text>
-            <Text fontSize="xl">Item name: {userData.name}</Text>
-            <Text fontSize="xl">Item weight: {userData.weight}</Text>
+            <Text fontSize="xl">Item id: {itemData.id}</Text>
+            <Text fontSize="xl">Item name: {itemData.Name}</Text>
+            <Text fontSize="xl">Item weight: {itemData.Weight}</Text>
           </Modal.Body>
           <Modal.Footer>
             <Button
@@ -76,6 +141,8 @@ const HomeScreen = ({ route, navigation }) => {
               colorScheme="blueGray"
               onPress={() => {
                 setShowModal(false);
+                
+                
               }}
             >
               Ok
