@@ -27,7 +27,6 @@ const AddingScreen = () => {
       setNameInput("");
       setWeightInput("");
     });
-
     Alert.alert("Item succesfully added!");
   };
 
@@ -40,8 +39,8 @@ const AddingScreen = () => {
       <FormControl ref={formEl}>
         <Stack space={5}>
           <Stack>
-            <FormControl.Label bgColor="#fff" mx="auto" px="5">
-              Item name:
+            <FormControl.Label mx="auto" px="5">
+              <Text color="#fff">Item name:</Text>
             </FormControl.Label>
             <Input
               value={nameInput}
@@ -56,8 +55,8 @@ const AddingScreen = () => {
             />
           </Stack>
           <Stack>
-            <FormControl.Label bgColor="#fff" mx="auto" px="5">
-              Item weight:
+            <FormControl.Label mx="auto" px="5">
+              <Text color="#fff">Item weight:</Text>
             </FormControl.Label>
             <Input
               value={weightInput}

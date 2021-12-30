@@ -39,9 +39,6 @@ const HomeScreen = ({ route, navigation }) => {
 
   return (
     <Box w="100%" h="100%" bgColor="rgb(41,54,63)">
-      <TouchableOpacity onPress={handleSignOut}>
-        <Text color="#fff">Sign Out</Text>
-      </TouchableOpacity>
       <Text
         color="#fff"
         mx="5"
