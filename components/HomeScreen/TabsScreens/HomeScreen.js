@@ -1,75 +1,32 @@
 import { Text, Box, FlatList, Modal, Button } from "native-base";
 import { TouchableOpacity } from "react-native";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Alert } from "react-native";
-import { auth,colref} from "../../../firebase";
-import {getDocs} from 'firebase/firestore';
+import { auth, colref } from "../../../firebase";
+import { getDocs } from "firebase/firestore";
 
 const HomeScreen = ({ route, navigation }) => {
-  const { user } = route.params;
+  //const { user } = route.params;
   const [showModal, setShowModal] = useState(false);
   const [itemData, setItemData] = useState({});
-  const [items,setItems] = useState([]);
-  const [ifAdd,setIfAdd] = useState(false);
-
-  
-
-  
+  const [items, setItems] = useState([]);
+  const [ifAdd, setIfAdd] = useState(false);
 
   useEffect(() => {
-      getDocs(colref)
-      .then(snapshot => {
-        
-      
-      snapshot.docs.forEach(doc => {
-
-
-
-            // if(items.length==0)
-            // {
-            //   items.push({ id: doc.id,...doc.data()})
-            // }
-
-        
-            //tems.forEach( (item,index) => {
-
-          //     if(item.id == doc.id  )
-          //     {
-          //        items.push({ id: doc.id,...doc.data()})
-          //      }
-
-
-          //  })
-
-          // items.forEach( (item,index)=> {
-
-
-          //     console.log(item.id,doc.id);
-          //     if(item.id != doc.id)
-          //     {
-          //       
-          //     }
-              
-          // })
-
-          if(ifAdd == false)
-          {
-            items.push({ id: doc.id,...doc.data()})
+    getDocs(colref)
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          if (ifAdd == false) {
+            items.push({ id: doc.id, ...doc.data() });
           }
-          
-          
-        
-        
-        
-      })
+        });
 
-      ifAdd = true;
-      
-    })
-    .catch(err => {
-      console.log(err.message)
-    })
+        ifAdd = true;
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }, []);
   const handleSignOut = () => {
     auth
@@ -79,9 +36,6 @@ const HomeScreen = ({ route, navigation }) => {
       })
       .catch((error) => alert(error.message));
   };
-  
-
-  
 
   return (
     <Box w="100%" h="100%" bgColor="rgb(41,54,63)">
@@ -96,8 +50,7 @@ const HomeScreen = ({ route, navigation }) => {
         fontWeight="bold"
         fontSize="xl"
       >
-        Hello {user}! You are logged in.{" "}
-        
+        Hello {"user"}! You are logged in.{" "}
       </Text>
       <Text color="#fff" textAlign="center" fontSize="16">
         {" "}
@@ -105,7 +58,6 @@ const HomeScreen = ({ route, navigation }) => {
       </Text>
       <Text color="#fff" textAlign="center" fontSize="12">
         Click to get details:
-        
       </Text>
 
       <FlatList
@@ -119,12 +71,10 @@ const HomeScreen = ({ route, navigation }) => {
           >
             <Text color="#fff" textAlign="center" mt="5">
               {item.Name}
-              
             </Text>
           </TouchableOpacity>
         )}
       />
-      
 
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400">
@@ -141,8 +91,6 @@ const HomeScreen = ({ route, navigation }) => {
               colorScheme="blueGray"
               onPress={() => {
                 setShowModal(false);
-                
-                
               }}
             >
               Ok
