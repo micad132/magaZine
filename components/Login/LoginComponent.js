@@ -32,13 +32,27 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate("MainScreen", { user: name });
+        //navigation.navigate("MainScreen", { user: name });
       }
     });
     return unsubscribe;
   }, []);
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password);
+    signInWithEmailAndPassword(auth, email, password)
+    .then(() => navigation.navigate("MainScreen", { user: name }))
+    .catch(error => {
+      switch(error.code){
+        case 'auth/invalid-email':
+          alert('Invalid email!')
+          break;
+        case 'auth/internal-error':
+          alert('Internal error!')
+          break;
+        case 'auth/wrong-password':
+          alert('Wrong password!')
+          break;
+      }
+    })
   };
 
   useFocusEffect(
@@ -117,7 +131,9 @@ const LoginScreen = ({ navigation }) => {
                 color="#fff"
                 ref={passwordInput}
                 value={password}
-                onChangeText={(val) => {setPassword(val)}}
+                onChangeText={(val) => {
+                  setPassword(val);
+                }}
                 InputRightElement={
                   <Icon
                     onPress={handleClick}
