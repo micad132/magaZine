@@ -1,6 +1,12 @@
-import React, { useState,useRef } from "react";
-import {Alert} from 'react-native';
+import React, { useState, useRef } from "react";
+import { Alert } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { auth } from "../../firebase";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import {
   NativeBaseProvider,
   Box,
@@ -16,20 +22,18 @@ import {
 
 const RegisterScreen = ({ navigation }) => {
   const [Show, setShow] = useState(false);
-  const [login,setLogin] = useState('');
-  const [password,setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const loginInput = useRef();
   const passwordInput = useRef();
   const handleClick = () => setShow(!Show);
   const AlertMsg = () => {
-
-    Alert.alert('User registered!');
-  }
-
-  const Validation = () => {
-
-    
-  }
+    Alert.alert("User registered!");
+  };
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(auth,email,password);
+  };
+  const Validation = () => {};
 
   return (
     <Box
@@ -55,13 +59,15 @@ const RegisterScreen = ({ navigation }) => {
       <VStack mx="auto" w="70%" space={3} mt="5">
         <FormControl>
           <FormControl.Label
-            _text={{ color: "white",fontSize: "xs", fontWeight: 500 }}
+            _text={{ color: "white", fontSize: "xs", fontWeight: 500 }}
           >
-            Login
+            Email
           </FormControl.Label>
           <Input
+            value={email}
             color="white"
-            placeholder="Login"
+            placeholder="Email"
+            onChangeText={(val) => setEmail(val)}
             InputLeftElement={
               <Icon
                 as={<MaterialIcons name="person" />}
@@ -72,7 +78,7 @@ const RegisterScreen = ({ navigation }) => {
             }
           />
         </FormControl>
-        
+
         <FormControl>
           <FormControl.Label
             _text={{ color: "white", fontSize: "xs", fontWeight: 500 }}
@@ -84,12 +90,7 @@ const RegisterScreen = ({ navigation }) => {
             overflow="visible"
             color="white"
             value={password}
-            onChangeText={() => 
-              {
-                
-                
-                setPassword(passwordInput.current.text)
-              }}
+            onChangeText={(val) => setPassword(val)}
             InputLeftElement={
               <Icon
                 as={<MaterialIcons name="lock" />}
@@ -127,12 +128,9 @@ const RegisterScreen = ({ navigation }) => {
             overflow="visible"
             ref={passwordInput}
             value={password}
-            onChangeText={() => 
-              {
-                
-                
-                setPassword(passwordInput.current.text)
-              }}
+            onChangeText={() => {
+              setPassword(passwordInput.current.text);
+            }}
             color="white"
             InputLeftElement={
               <Icon
@@ -165,14 +163,11 @@ const RegisterScreen = ({ navigation }) => {
           colorScheme="indigo"
           _text={{ color: "white" }}
           bgColor="rgb(110,217,161)"
-          onPress={() => 
-            {
-              
-              AlertMsg();
-              navigation.navigate("Login");
-            
-            }
-          }>
+          onPress={() => {
+            AlertMsg();
+            handleSignUp();
+          }}
+        >
           Sign up
         </Button>
       </VStack>
