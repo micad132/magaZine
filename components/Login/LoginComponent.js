@@ -1,6 +1,6 @@
-import React, { useState,useRef} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   Box,
@@ -13,35 +13,43 @@ import {
   Icon,
   View,
 } from "native-base";
-
-
+import { auth } from "../../firebase";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const LoginScreen = ({ navigation }) => {
   const [name, setName] = useState("user");
   const [Show, setShow] = useState(false);
-  const [login,setLogin] = useState('');
-  const [password,setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const handleClick = () => setShow(!Show);
   const loginInput = useRef();
   const passwordInput = useRef();
-  
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.navigate("MainScreen", { user: name });
+      }
+    });
+    return unsubscribe;
+  }, []);
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password);
+  };
 
-
- useFocusEffect(
-    React.useCallback(()=> {
-
-        
-        
-
-        return() => {
-        setName('user');
-        setLogin('');
-        setPassword('');
-        
-
-        }
-    },[]));
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        setName("user");
+        setEmail("");
+        setPassword("");
+      };
+    }, [])
+  );
 
   return (
     <Box w="100%" h="100%" bgColor="rgb(41,54,63)">
@@ -79,21 +87,18 @@ const LoginScreen = ({ navigation }) => {
                   fontWeight: 500,
                 }}
               >
-                Login
+                Email
               </FormControl.Label>
               <Input
                 ref={loginInput}
-                value ={login}
-                onChangeText={(val) => 
-                  {
-                    
-                    setName(val);
-                    setLogin(loginInput.current.text);
-                  }}
-                placeholder="Login"
+                value={email}
+                onChangeText={(val) => {
+                  setName(val);
+                  setEmail(val);
+                }}
+                placeholder="Email"
                 w="100%"
                 color="#fff"
-                
               />
             </FormControl>
             <FormControl>
@@ -112,10 +117,7 @@ const LoginScreen = ({ navigation }) => {
                 color="#fff"
                 ref={passwordInput}
                 value={password}
-                onChangeText={()=>{
-
-                  setPassword(passwordInput.current.text);
-                }}
+                onChangeText={(val) => {setPassword(val)}}
                 InputRightElement={
                   <Icon
                     onPress={handleClick}
@@ -138,7 +140,7 @@ const LoginScreen = ({ navigation }) => {
             <Text
               style={[
                 styles.buttonText,
-                { textAlign: "center", marginBottom: 10,fontSize: 16 },
+                { textAlign: "center", marginBottom: 10, fontSize: 16 },
               ]}
             >
               {" "}
@@ -146,7 +148,9 @@ const LoginScreen = ({ navigation }) => {
             </Text>
             <Button
               style={styles.buttonLoginStyle}
-              onPress={() => navigation.navigate("MainScreen",{user: name})}
+              onPress={() => {
+                handleLogin();
+              }}
             >
               <Text style={styles.buttonText}> LOGIN</Text>
             </Button>
@@ -167,7 +171,6 @@ const LoginScreen = ({ navigation }) => {
     </Box>
   );
 };
-
 
 export default LoginScreen;
 
