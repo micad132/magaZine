@@ -4,7 +4,7 @@ import MainScreen from "../HomeScreen";
 import Help from "./Help";
 const drawer = createDrawerNavigator();
 
-const DrawerScreen = () => {
+const DrawerScreen = ({route,navigation}) => {
   return (
     <drawer.Navigator>
       <drawer.Screen

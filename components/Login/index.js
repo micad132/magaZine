@@ -2,7 +2,6 @@ import React from "react";
 import LoginScreen from "./LoginComponent";
 import RegisterScreen from "./RegisterComponent";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import MainScreen from "../HomeScreen";
 import DrawerScreen from "../DrawerScreens";
 
 const Stack = createNativeStackNavigator();
@@ -33,7 +32,7 @@ export default function Login() {
       <Stack.Screen
         name="MainScreen"
         component={DrawerScreen}
-        initialParams={{user: 'michal'}}
+        //initialParams={{user: 'michal'}}
         options={{
           headerShown: false,
           headerTransparent: true,

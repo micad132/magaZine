@@ -1,8 +1,6 @@
 import { Text, Box, FlatList, Modal, Button } from "native-base";
 import { TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
-
-import { Alert } from "react-native";
 import { auth, colref } from "../../../firebase";
 import { getDocs } from "firebase/firestore";
 

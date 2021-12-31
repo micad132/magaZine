@@ -12,7 +12,7 @@ const MainScreen = ({ navigation,route }) => {
   return (
     <Tab.Navigator initialRouteName="HomeScreen">
       <Tab.Screen
-        name="Home"
+        name="Homee"
         component={HomeScreen}
         //initialParams={{user: route.params.user}}
         options={{headerShown: false, tabBarShowLabel: false, tabBarIcon: () => <MaterialCommunityIcons name="home" size={25} /> }}

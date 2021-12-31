@@ -30,7 +30,7 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => alert("user registered!"), navigation.navigate("Login"))
+      .then(() => alert("User registered!"))
       .catch((error) => {
         alert(error.message);
         switch (error.code) {
@@ -49,7 +49,6 @@ const RegisterScreen = ({ navigation }) => {
         }
       });
   };
-  const Validation = () => {};
 
   return (
     <Box

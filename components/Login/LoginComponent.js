@@ -51,6 +51,9 @@ const LoginScreen = ({ navigation }) => {
         case 'auth/wrong-password':
           alert('Wrong password!')
           break;
+        case 'auth/user-not-found':
+          alert('User not found!')
+          break;
       }
     })
   };
