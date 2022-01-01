@@ -1,6 +1,7 @@
 import {initializeApp} from 'firebase/app';
 import {getFirestore, collection, getDocs} from 'firebase/firestore';
-import {getAuth} from 'firebase/auth';
+import {getAuth, onAuthStateChanged} from 'firebase/auth';
+import { useEffect, useState } from 'react';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBLSWsDLJqDyIxVMZE2zAMginRFBm_zskE",
@@ -16,6 +17,4 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 const  colref = collection(db, 'Inventory');
-
-
 export { auth,colref};

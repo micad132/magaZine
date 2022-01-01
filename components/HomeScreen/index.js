@@ -14,7 +14,6 @@ const MainScreen = ({ navigation,route }) => {
       <Tab.Screen
         name="Homee"
         component={HomeScreen}
-        //initialParams={{user: route.params.user}}
         options={{headerShown: false, tabBarShowLabel: false, tabBarIcon: () => <MaterialCommunityIcons name="home" size={25} /> }}
       />
       <Tab.Screen

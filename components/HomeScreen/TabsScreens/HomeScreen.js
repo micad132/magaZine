@@ -5,7 +5,6 @@ import { auth, colref } from "../../../firebase";
 import { getDocs } from "firebase/firestore";
 
 const HomeScreen = ({ route, navigation }) => {
-  //const { user } = route.params;
   const [showModal, setShowModal] = useState(false);
   const [itemData, setItemData] = useState({});
   const [items, setItems] = useState([]);
@@ -26,14 +25,6 @@ const HomeScreen = ({ route, navigation }) => {
         console.log(err.message);
       });
   }, []);
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace("Login");
-      })
-      .catch((error) => alert(error.message));
-  };
 
   return (
     <Box w="100%" h="100%" bgColor="rgb(41,54,63)">

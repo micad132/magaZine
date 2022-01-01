@@ -11,54 +11,61 @@ import {
   Input,
 } from "native-base";
 import React, { useEffect, useState } from "react";
-import { auth } from "../../../firebase";
-import { updateProfile } from "firebase/auth";
-import { useFocusEffect } from "@react-navigation/native";
+import { auth, user, onAuth } from "../../../firebase";
+import { signOut, updateProfile, onIdTokenChanged } from "firebase/auth";
 
-
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation, route }) => {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-        console.log(user)
-      setName(user.displayName);
-    });
-  }, []);
+  const [logOut, setLogOut] = useState(false);
+  const [user, setUser] = useState();
+
+
   const handleSignOut = () => {
-    auth
-      .signOut()
+    signOut(auth)
       .then(() => {
-        navigation.replace("Login")
+        console.log("Wylogowano");
+        navigation.navigate("Login");
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
+  useEffect(()=>{
+    const unsubscribe = navigation.addListener('focus', ()=>{
+      onIdTokenChanged(auth, (user) => {
+        if(user){
+          setUser(user);
+          setName(user.displayName);
+        }
+        else{
+          return unsubscribe;
+        }
+      });
+    })
+    return unsubscribe;
+  },[navigation]);
   const updateName = () => {
-    auth.onAuthStateChanged((user) => {
+    if (user) {
       updateProfile(user, {
         displayName: name,
       });
-    });
+      alert("Zmieniono!");
+    }
   };
+
   return (
     <Box w="100%" h="100%" bgColor="rgb(41,54,63)">
       <Avatar mt={20} bg="pink.600" alignSelf="center" size="xl">
-        {name && <Text>{name}</Text>}
+        {user && <Text>{user.displayName}</Text>}
       </Avatar>
       <VStack space={4} alignItems="center">
         <Heading color="#fff" textAlign="center" mb="10">
           Information
         </Heading>
       </VStack>
+      <Text mb={5} fontSize="lg" textAlign="center" color="#fff">Email: {user && user.email}</Text>
 
-      <Button
-        onPress={() => {
-          setShowModal(true);
-        }}
-        colorScheme="success"
-      >
-        Settings
-      </Button>
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400">
           <Modal.CloseButton />
@@ -66,6 +73,7 @@ const ProfileScreen = ({ navigation }) => {
           <Modal.Body>
             <Text>Set your nickname</Text>
             <Input
+              maxLength={10}
               value={name}
               onChangeText={(val) => {
                 setName(val);
@@ -91,9 +99,26 @@ const ProfileScreen = ({ navigation }) => {
           </Modal.Footer>
         </Modal.Content>
       </Modal>
-      <Button onPress={handleSignOut} colorScheme="success">
-        Sign Out
-      </Button>
+      <Box alignItems="center">
+        <Button
+          onPress={() => {
+            setShowModal(true);
+          }}
+          colorScheme="success"
+        >
+          Settings
+        </Button>
+        <Button
+          mt={5}
+          onPress={() => {
+            setLogOut(true);
+            handleSignOut();
+          }}
+          colorScheme="success"
+        >
+          Sign Out
+        </Button>
+      </Box>
     </Box>
   );
 };

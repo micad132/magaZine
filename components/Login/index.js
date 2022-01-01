@@ -30,9 +30,8 @@ export default function Login() {
         }}
       />
       <Stack.Screen
-        name="MainScreen"
+        name="DrawerScreen"
         component={DrawerScreen}
-        //initialParams={{user: 'michal'}}
         options={{
           headerShown: false,
           headerTransparent: true,

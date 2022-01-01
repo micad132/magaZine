@@ -32,14 +32,14 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate("MainScreen", { user: name });
+        navigation.navigate("DrawerScreen");
       }
     });
     return unsubscribe;
   }, []);
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
-    .then(() => navigation.navigate("MainScreen", { user: name }))
+    .then(() => navigation.navigate("DrawerScreen"))
     .catch(error => {
       switch(error.code){
         case 'auth/invalid-email':
