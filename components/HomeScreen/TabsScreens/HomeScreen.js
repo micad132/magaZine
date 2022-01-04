@@ -8,18 +8,18 @@ const HomeScreen = ({ route, navigation }) => {
   const [showModal, setShowModal] = useState(false);
   const [itemData, setItemData] = useState({});
   const [items, setItems] = useState([]);
-  const [ifAdd, setIfAdd] = useState(false);
+  const [ifAdd, setIfAdd] = useState(true);
 
   useEffect(() => {
+    setIfAdd(true);
     getDocs(colref)
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
-          if (ifAdd == false) {
-            items.push({ id: doc.id, ...doc.data() });
-          }
+          items.push({ id: doc.id, ...doc.data() });
         });
-
-        ifAdd = true;
+      })
+      .finally(() => {
+        setIfAdd(false);
       })
       .catch((err) => {
         console.log(err.message);
@@ -46,22 +46,23 @@ const HomeScreen = ({ route, navigation }) => {
         Click to get details:
       </Text>
 
-      <FlatList
-        data={items}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => {
-              setShowModal(true);
-              setItemData(item);
-            }}
-          >
-            <Text color="#fff" textAlign="center" mt="5">
-              {item.Name}
-            </Text>
-          </TouchableOpacity>
-        )}
-      />
-
+      {ifAdd == false && (
+        <FlatList
+          data={items}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => {
+                setShowModal(true);
+                setItemData(item);
+              }}
+            >
+              <Text color="#fff" textAlign="center" mt="5">
+                {item.Name}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
+      )}
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400">
           <Modal.CloseButton />
