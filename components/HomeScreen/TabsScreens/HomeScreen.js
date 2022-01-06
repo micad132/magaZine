@@ -1,5 +1,5 @@
-import { Text, Box, FlatList, Modal, Button } from "native-base";
-import { TouchableOpacity } from "react-native";
+import { Text, Box, FlatList, Modal, Button, Avatar } from "native-base";
+import { Image, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import { auth, colref } from "../../../firebase";
 import { getDocs } from "firebase/firestore";
@@ -56,7 +56,7 @@ const HomeScreen = ({ route, navigation }) => {
                 setItemData(item);
               }}
             >
-              <Text color="#fff" textAlign="center" mt="5">
+              <Text color="#fff" mt="5">
                 {item.Name}
               </Text>
             </TouchableOpacity>
@@ -68,6 +68,7 @@ const HomeScreen = ({ route, navigation }) => {
           <Modal.CloseButton />
           <Modal.Header>Item details:</Modal.Header>
           <Modal.Body>
+            <Avatar source={{ uri: itemData.ImageUri }} />
             <Text fontSize="xl">Item id: {itemData.id}</Text>
             <Text fontSize="xl">Item name: {itemData.Name}</Text>
             <Text fontSize="xl">Item weight: {itemData.Weight}</Text>

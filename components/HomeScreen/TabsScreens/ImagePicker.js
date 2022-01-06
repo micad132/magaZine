@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
-import { Box, Button, Flex, Image, Text } from "native-base";
+import { Avatar, Box, Button, Flex, Image, Text } from "native-base";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const CurryImagePicker = ({ image, onImagePicked }) => {
   const [selectedImage, setSelectedImage] = useState(null);
-
+  useEffect(() => {
+    if (image) {
+      setSelectedImage({ uri: image });
+    }
+  }, [image]);
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -14,17 +18,21 @@ const CurryImagePicker = ({ image, onImagePicked }) => {
     });
 
     if (!result.cancelled) {
-      setSelectedImage(null);
-      setSelectedImage(result.uri);
+      setSelectedImage();
+      onImagePicked();
+      setSelectedImage({ uri: result.uri });
+      onImagePicked({ uri: result.uri });
     }
   };
   const takePhoto = async () => {
     let result = await ImagePicker.launchCameraAsync({
-      allowsEditing: false,
+      allowsEditing: true,
     });
     if (!result.cancelled) {
-      setSelectedImage(null);
-      setSelectedImage(result.uri);
+      setSelectedImage();
+      onImagePicked();
+      setSelectedImage({ uri: result.uri });
+      onImagePicked({ uri: result.uri });
     }
   };
 
@@ -32,9 +40,7 @@ const CurryImagePicker = ({ image, onImagePicked }) => {
     <Box w="100%">
       <Box w="100%" alignItems="center">
         <Text color="#fff">Choose item picture!</Text>
-        {selectedImage && (
-          <Image h="150" w="80%" source={{ uri: selectedImage }} alt="Txt" />
-        )}
+        {selectedImage && <Avatar size={150} source={selectedImage} />}
       </Box>
       <Flex direction="row" mx="auto">
         <Button

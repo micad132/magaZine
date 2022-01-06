@@ -1,7 +1,5 @@
 import { addDoc } from "firebase/firestore";
 import {
-  Label,
-  Form,
   Input,
   Text,
   Box,
@@ -9,15 +7,17 @@ import {
   FormControl,
   Button,
   ScrollView,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
 } from "native-base";
+import { v4 as uuidv4 } from "uuid";
 import React, { useRef, useState } from "react";
 import { Alert } from "react-native";
-import { auth, colref } from "../../../firebase";
+import { storage, colref } from "../../../firebase";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  child,
+} from "firebase/storage";
 import ImagePicker from "./ImagePicker";
 const AddingScreen = () => {
   const formEl = useRef(null);
@@ -25,15 +25,54 @@ const AddingScreen = () => {
   const [weightInput, setWeightInput] = useState("");
   const [image, setImage] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (nameInput && weightInput && image) {
-      addDoc(colref, {
-        Name: nameInput,
-        Weight: weightInput,
-      }).then(() => {
-        setNameInput("");
-        setWeightInput("");
-      });
+      const fileExt = image.uri.split(".").pop();
+      var uuid = uuidv4();
+      const filename = `${uuid}.${fileExt}`;
+      var storageRef = ref(storage, `images/${filename}`);
+      const response = await fetch(image.uri);
+      const blob = await response.blob();
+      console.log(response);
+      const metadata = {
+        contentType: `image/${fileExt}`,
+      };
+      var uploadTask = uploadBytesResumable(storageRef, blob, metadata);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          switch (error.code) {
+            case "storage/unauthorized":
+              console.log("Storage unauthorized");
+              break;
+            case "storage/canceled":
+              console.log("Storage upload canceled");
+              break;
+            case "storage/unknown":
+              console.log("Storage unknown");
+              break;
+          }
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            addDoc(colref, {
+              Name: nameInput,
+              Weight: weightInput,
+              ImageUri: downloadURL,
+            }).then(() => {});
+          });
+        }
+      );
       Alert.alert("Item succesfully added!");
     } else {
       Alert.alert("Empty inputs!");
@@ -69,23 +108,17 @@ const AddingScreen = () => {
               <FormControl.Label mx="auto" px="5">
                 <Text color="#fff">Item weight:</Text>
               </FormControl.Label>
-              <NumberInput min={1} max={100000000}>
-                <NumberInputField
-                  value={weightInput}
-                  onChangeText={(val) => {
-                    setWeightInput(val);
-                  }}
-                  variant="underlined"
-                  p={2}
-                  w="70%"
-                  mx="auto"
-                  color="#fff"
-                />
-                <NumberInputStepper color="rgb(110,217,161)">
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
+              <Input
+                value={weightInput}
+                onChangeText={(val) => {
+                  setWeightInput(val);
+                }}
+                variant="underlined"
+                p={2}
+                w="70%"
+                mx="auto"
+                color="#fff"
+              />
             </Stack>
             <Stack>
               <Button

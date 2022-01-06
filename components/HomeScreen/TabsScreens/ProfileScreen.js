@@ -20,7 +20,6 @@ const ProfileScreen = ({ navigation, route }) => {
   const [logOut, setLogOut] = useState(false);
   const [user, setUser] = useState();
 
-
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -31,20 +30,19 @@ const ProfileScreen = ({ navigation, route }) => {
         console.log(error.message);
       });
   };
-  useEffect(()=>{
-    const unsubscribe = navigation.addListener('focus', ()=>{
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
       onIdTokenChanged(auth, (user) => {
-        if(user){
+        if (user) {
           setUser(user);
           setName(user.displayName);
-        }
-        else{
+        } else {
           return unsubscribe;
         }
       });
-    })
+    });
     return unsubscribe;
-  },[navigation]);
+  }, [navigation]);
   const updateName = () => {
     if (user) {
       updateProfile(user, {
@@ -64,7 +62,9 @@ const ProfileScreen = ({ navigation, route }) => {
           Information
         </Heading>
       </VStack>
-      <Text mb={5} fontSize="lg" textAlign="center" color="#fff">Email: {user && user.email}</Text>
+      <Text mb={5} fontSize="lg" textAlign="center" color="#fff">
+        Email: {user && user.email}
+      </Text>
 
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400">
