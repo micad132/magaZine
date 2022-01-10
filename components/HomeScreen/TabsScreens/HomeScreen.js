@@ -1,8 +1,9 @@
-import { Text, Box, FlatList, Modal, Button, Avatar } from "native-base";
-import { Image, TouchableOpacity } from "react-native";
+import { Text, Box, FlatList, Modal, Button, Avatar,View } from "native-base";
+import { Image, TouchableOpacity,StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import { auth, colref } from "../../../firebase";
 import { getDocs } from "firebase/firestore";
+import { alignItems, backgroundColor, marginBottom } from "styled-system";
 
 const HomeScreen = ({ route, navigation }) => {
   const [showModal, setShowModal] = useState(false);
@@ -11,19 +12,34 @@ const HomeScreen = ({ route, navigation }) => {
   const [ifAdd, setIfAdd] = useState(true);
 
   useEffect(() => {
+    
     setIfAdd(true);
+    
+    
+    
     getDocs(colref)
       .then((snapshot) => {
+
+        
         snapshot.docs.forEach((doc) => {
           items.push({ id: doc.id, ...doc.data() });
+          
         });
+        
       })
       .finally(() => {
-        setIfAdd(false);
+        setIfAdd(false); //bez tego nie dziala idk
       })
       .catch((err) => {
         console.log(err.message);
       });
+    
+      return () => {
+        setItems([]);
+       
+        setItemData({});
+        setShowModal(false);
+      }
   }, []);
 
   return (
@@ -31,7 +47,8 @@ const HomeScreen = ({ route, navigation }) => {
       <Text
         color="#fff"
         mx="5"
-        my="10"
+        mt="70"
+        mb="30"
         textAlign="center"
         fontWeight="bold"
         fontSize="xl"
@@ -48,28 +65,32 @@ const HomeScreen = ({ route, navigation }) => {
 
       {ifAdd == false && (
         <FlatList
+        style={styles.container}
           data={items}
           renderItem={({ item }) => (
+            <View style={styles.viewStyle}>
             <TouchableOpacity
+              style={styles.items}
               onPress={() => {
                 setShowModal(true);
                 setItemData(item);
               }}
             >
-              <Text color="#fff" mt="5">
+              <Text color="#fff" >
                 {item.Name}
               </Text>
             </TouchableOpacity>
+            </View>
           )}
         />
       )}
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <Modal.Content maxWidth="400">
+        <Modal.Content maxWidth="600" minWidth="350">
           <Modal.CloseButton />
           <Modal.Header>Item details:</Modal.Header>
           <Modal.Body>
-            <Avatar source={{ uri: itemData.ImageUri }} />
-            <Text fontSize="xl">Item id: {itemData.id}</Text>
+            <Avatar mx="auto" source={{ uri: itemData.ImageUri }} />
+            <Text fontSize="md">Item id: {itemData.id}</Text>
             <Text fontSize="xl">Item name: {itemData.Name}</Text>
             <Text fontSize="xl">Item weight: {itemData.Weight}</Text>
           </Modal.Body>
@@ -91,3 +112,42 @@ const HomeScreen = ({ route, navigation }) => {
 };
 
 export default HomeScreen;
+
+
+const styles = StyleSheet.create({
+
+
+  container: {
+
+      flex: 1,
+      
+      
+  },
+
+
+  viewStyle: {
+
+  
+
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+    items: {
+
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: "white",
+        marginBottom: 10,
+        width: '60%',
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 10
+        
+        
+    }
+
+
+
+})
