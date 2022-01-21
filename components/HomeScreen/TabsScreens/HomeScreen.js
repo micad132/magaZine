@@ -1,9 +1,10 @@
-import { Text, Box, FlatList, Modal, Button, Avatar,View } from "native-base";
-import { Image, TouchableOpacity,StyleSheet } from "react-native";
+import { Text, Box, FlatList, Modal, Button, Avatar, View } from "native-base";
+import { Image, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import { auth, colref } from "../../../firebase";
 import { getDocs } from "firebase/firestore";
 import { alignItems, backgroundColor, marginBottom } from "styled-system";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 const HomeScreen = ({ route, navigation }) => {
   const [showModal, setShowModal] = useState(false);
@@ -12,34 +13,22 @@ const HomeScreen = ({ route, navigation }) => {
   const [ifAdd, setIfAdd] = useState(true);
 
   useEffect(() => {
-    
+    console.log("tak");
     setIfAdd(true);
-    
-    
-    
+    const data = [];
     getDocs(colref)
       .then((snapshot) => {
-
-        
         snapshot.docs.forEach((doc) => {
-          items.push({ id: doc.id, ...doc.data() });
-          
+          data.push({ id: doc.id, ...doc.data() });
         });
-        
       })
       .finally(() => {
-        setIfAdd(false); //bez tego nie dziala idk
+        setItems(data);
+        setIfAdd(false);
       })
       .catch((err) => {
         console.log(err.message);
       });
-    
-      return () => {
-        setItems([]);
-       
-        setItemData({});
-        setShowModal(false);
-      }
   }, []);
 
   return (
@@ -65,21 +54,19 @@ const HomeScreen = ({ route, navigation }) => {
 
       {ifAdd == false && (
         <FlatList
-        style={styles.container}
+          style={styles.container}
           data={items}
           renderItem={({ item }) => (
             <View style={styles.viewStyle}>
-            <TouchableOpacity
-              style={styles.items}
-              onPress={() => {
-                setShowModal(true);
-                setItemData(item);
-              }}
-            >
-              <Text color="#fff" >
-                {item.Name}
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.items}
+                onPress={() => {
+                  setShowModal(true);
+                  setItemData(item);
+                }}
+              >
+                <Text color="#fff">{item.Name}</Text>
+              </TouchableOpacity>
             </View>
           )}
         />
@@ -113,41 +100,25 @@ const HomeScreen = ({ route, navigation }) => {
 
 export default HomeScreen;
 
-
 const styles = StyleSheet.create({
-
-
   container: {
-
-      flex: 1,
-      
-      
+    flex: 1,
   },
-
 
   viewStyle: {
-
-  
-
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
 
-    items: {
-
-        borderWidth: 1,
-        borderRadius: 5,
-        borderColor: "white",
-        marginBottom: 10,
-        width: '60%',
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 10
-        
-        
-    }
-
-
-
-})
+  items: {
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: "white",
+    marginBottom: 10,
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+});

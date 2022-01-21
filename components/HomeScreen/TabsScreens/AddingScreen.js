@@ -19,7 +19,7 @@ import {
   child,
 } from "firebase/storage";
 import ImagePicker from "./ImagePicker";
-const AddingScreen = () => {
+const AddingScreen = ({ navigation }) => {
   const formEl = useRef(null);
   const [nameInput, setNameInput] = useState("");
   const [weightInput, setWeightInput] = useState("");
@@ -74,6 +74,10 @@ const AddingScreen = () => {
         }
       );
       Alert.alert("Item succesfully added!");
+      navigation.navigate("Homee");
+      setNameInput("");
+      setWeightInput("");
+      setImage("");
     } else {
       Alert.alert("Empty inputs!");
     }

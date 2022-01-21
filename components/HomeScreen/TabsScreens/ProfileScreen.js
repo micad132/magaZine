@@ -37,7 +37,7 @@ const ProfileScreen = ({ navigation, route }) => {
           setUser(user);
           setName(user.displayName);
         } else {
-          return unsubscribe;
+          return;
         }
       });
     });
