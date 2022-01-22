@@ -29,38 +29,34 @@ const LoginScreen = ({ navigation }) => {
   const loginInput = useRef();
   const passwordInput = useRef();
 
-  // useEffect(() => {
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.navigate("DrawerScreen");
+      }
+    });
 
-    
-
-    
-  //   const unsubscribe = auth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       navigation.navigate("DrawerScreen");
-  //     }
-  //   });
-    
-  //   return unsubscribe
-  // }, []);
+    return unsubscribe;
+  }, []);
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
-    .then(() => navigation.navigate("DrawerScreen"))
-    .catch(error => {
-      switch(error.code){
-        case 'auth/invalid-email':
-          alert('Invalid email!')
-          break;
-        case 'auth/internal-error':
-          alert('Internal error!')
-          break;
-        case 'auth/wrong-password':
-          alert('Wrong password!')
-          break;
-        case 'auth/user-not-found':
-          alert('User not found!')
-          break;
-      }
-    })
+      .then(() => navigation.navigate("DrawerScreen"))
+      .catch((error) => {
+        switch (error.code) {
+          case "auth/invalid-email":
+            alert("Invalid email!");
+            break;
+          case "auth/internal-error":
+            alert("Internal error!");
+            break;
+          case "auth/wrong-password":
+            alert("Wrong password!");
+            break;
+          case "auth/user-not-found":
+            alert("User not found!");
+            break;
+        }
+      });
   };
 
   useFocusEffect(

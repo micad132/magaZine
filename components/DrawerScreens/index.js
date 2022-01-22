@@ -2,9 +2,10 @@ import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import MainScreen from "../HomeScreen";
 import Info from "./Help";
+import Location from "./Location";
 const drawer = createDrawerNavigator();
 
-const DrawerScreen = ({route,navigation}) => {
+const DrawerScreen = ({ route, navigation }) => {
   return (
     <drawer.Navigator>
       <drawer.Screen
@@ -19,6 +20,15 @@ const DrawerScreen = ({route,navigation}) => {
       <drawer.Screen
         name="Info"
         component={Info}
+        options={{
+          headerShown: true,
+          headerTitle: "",
+          headerTransparent: true,
+        }}
+      />
+      <drawer.Screen
+        name="Location"
+        component={Location}
         options={{
           headerShown: true,
           headerTitle: "",
