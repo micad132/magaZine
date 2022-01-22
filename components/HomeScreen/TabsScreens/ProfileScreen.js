@@ -24,6 +24,8 @@ const ProfileScreen = ({ navigation, route }) => {
     signOut(auth)
       .then(() => {
         console.log("Wylogowano");
+        setName('');
+        setUser('');
         navigation.navigate("Login");
       })
       .catch((error) => {
@@ -31,18 +33,21 @@ const ProfileScreen = ({ navigation, route }) => {
       });
   };
   useEffect(() => {
+    let isMounted = true;
     const unsubscribe = navigation.addListener("focus", () => {
       onIdTokenChanged(auth, (user) => {
-        if (user) {
-          setUser(user);
-          setName(user.displayName);
-        } else {
-          return;
+        if (isMounted) {
+          if (user) {
+            setUser(user);
+            setName(user.displayName);
+          }
         }
       });
     });
-    return unsubscribe;
-  }, [navigation]);
+    return () => {
+      unsubscribe, (isMounted = false);
+    };
+  }, []);
   const updateName = () => {
     if (user) {
       updateProfile(user, {

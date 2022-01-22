@@ -29,14 +29,19 @@ const LoginScreen = ({ navigation }) => {
   const loginInput = useRef();
   const passwordInput = useRef();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.navigate("DrawerScreen");
-      }
-    });
-    return unsubscribe;
-  }, []);
+  // useEffect(() => {
+
+    
+
+    
+  //   const unsubscribe = auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       navigation.navigate("DrawerScreen");
+  //     }
+  //   });
+    
+  //   return unsubscribe
+  // }, []);
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
     .then(() => navigation.navigate("DrawerScreen"))

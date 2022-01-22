@@ -74,7 +74,7 @@ const AddingScreen = ({ navigation }) => {
         }
       );
       Alert.alert("Item succesfully added!");
-      navigation.navigate("Homee");
+      //navigation.navigate("Homee");
       setNameInput("");
       setWeightInput("");
       setImage("");

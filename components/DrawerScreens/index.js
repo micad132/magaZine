@@ -1,7 +1,7 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import MainScreen from "../HomeScreen";
-import Help from "./Help";
+import Info from "./Help";
 const drawer = createDrawerNavigator();
 
 const DrawerScreen = ({route,navigation}) => {
@@ -17,8 +17,8 @@ const DrawerScreen = ({route,navigation}) => {
         }}
       />
       <drawer.Screen
-        name="Help"
-        component={Help}
+        name="Info"
+        component={Info}
         options={{
           headerShown: true,
           headerTitle: "",

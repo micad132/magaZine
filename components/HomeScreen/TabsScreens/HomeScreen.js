@@ -14,21 +14,36 @@ const HomeScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     console.log("tak");
-    setIfAdd(true);
+    //setIfAdd(true);
+    let isMounted = false;
     const data = [];
+
+    
+
+    
     getDocs(colref)
       .then((snapshot) => {
+
+        if(!isMounted)
+        {
+
+        
         snapshot.docs.forEach((doc) => {
           data.push({ id: doc.id, ...doc.data() });
+          
+          setItems(data);
         });
+      }
       })
-      .finally(() => {
-        setItems(data);
-        setIfAdd(false);
-      })
+      
+        
+        
+      
       .catch((err) => {
         console.log(err.message);
       });
+    
+      return () => {isMounted = true;}
   }, []);
 
   return (
@@ -52,7 +67,7 @@ const HomeScreen = ({ route, navigation }) => {
         Click to get details:
       </Text>
 
-      {ifAdd == false && (
+      
         <FlatList
           style={styles.container}
           data={items}
@@ -70,7 +85,7 @@ const HomeScreen = ({ route, navigation }) => {
             </View>
           )}
         />
-      )}
+      )
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="600" minWidth="350">
           <Modal.CloseButton />
