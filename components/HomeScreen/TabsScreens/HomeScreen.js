@@ -1,47 +1,79 @@
 import { Text, Box, FlatList, Modal, Button, Avatar, View } from "native-base";
-import { Image, TouchableOpacity, StyleSheet } from "react-native";
+import { Image, TouchableOpacity, StyleSheet,RefreshControl, Alert , VerticalStack } from "react-native";
 import React, { useState, useEffect } from "react";
-import { auth, colref } from "../../../firebase";
-import { getDocs } from "firebase/firestore";
-import { alignItems, backgroundColor, marginBottom } from "styled-system";
+import { auth, colref,db } from "../../../firebase";
+import { getDocs, deleteDoc , doc } from "firebase/firestore";
+import { alignItems, backgroundColor, justifyContent, marginBottom } from "styled-system";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
+import Edit from './index';
 
 const HomeScreen = ({ route, navigation }) => {
   const [showModal, setShowModal] = useState(false);
   const [itemData, setItemData] = useState({});
   const [items, setItems] = useState([]);
   const [ifAdd, setIfAdd] = useState(true);
+  const [refresh,setRefresh] = useState(false);
+  
+
+ const deleteItem = (id) => {
+
+       
+    const docRef = doc(db, "Inventory",id);
+    deleteDoc(docRef);
+    Alert.alert("Item deleted");
+      
+
+ }
+
+  const onRefreshFun = () => {
+
+    
+    setRefresh(true);
+    fetchingData();
+    setRefresh(false);
+
+  }
+
+
+  const fetchingData = () => {
+
+    const data = [];
+    getDocs(colref)
+        .then((snapshot) => {
+
+          
+
+          
+          snapshot.docs.forEach((doc) => {
+            data.push({ id: doc.id, ...doc.data() });
+            
+            
+          });
+
+          setItems(data);
+        
+        })
+        
+          
+          
+        
+        .catch((err) => {
+          console.log(err.message);
+        });
+  }
 
   useEffect(() => {
-    console.log("tak");
+    //console.log("tak");
     //setIfAdd(true);
     let isMounted = false;
-    const data = [];
+    //const data = [];
 
     
-
+    if(!isMounted)
+    {
     
-    getDocs(colref)
-      .then((snapshot) => {
-
-        if(!isMounted)
-        {
-
-        
-        snapshot.docs.forEach((doc) => {
-          data.push({ id: doc.id, ...doc.data() });
-          
-          setItems(data);
-        });
-      }
-      })
-      
-        
-        
-      
-      .catch((err) => {
-        console.log(err.message);
-      });
+      fetchingData();
+    }
     
       return () => {isMounted = true;}
   }, []);
@@ -61,31 +93,51 @@ const HomeScreen = ({ route, navigation }) => {
       </Text>
       <Text color="#fff" textAlign="center" fontSize="16">
         {" "}
-        All the items in database:
+        All the items in database: 
       </Text>
-      <Text color="#fff" textAlign="center" fontSize="12">
+      <Text color="#fff" textAlign="center" fontSize="14">
+        
+        Swipe down to refresh!
+      </Text>
+      <Text color="#fff" textAlign="center" fontSize="12" marginBottom="5">
         Click to get details:
       </Text>
 
       
         <FlatList
           style={styles.container}
+          refreshControl={
+
+            <RefreshControl refreshing={refresh} onRefresh={onRefreshFun}>
+
+
+            </RefreshControl>
+
+          }
           data={items}
           renderItem={({ item }) => (
-            <View style={styles.viewStyle}>
-              <TouchableOpacity
-                style={styles.items}
-                onPress={() => {
-                  setShowModal(true);
-                  setItemData(item);
-                }}
-              >
-                <Text color="#fff">{item.Name}</Text>
-              </TouchableOpacity>
+            <View style={styles.itemContainer}>
+              <View style={styles.viewStyle}>
+                <TouchableOpacity
+                  style={styles.items}
+                  onPress={() => {
+                    setShowModal(true);
+                    setItemData(item);
+                  }}
+                >
+                  <Text color="#fff">{item.Name}</Text>
+                </TouchableOpacity>
+                <View style={{flex: 1, flexDirection: "row" }}>
+                    <Button  width="70"  marginX="5" marginBottom="2" onPress={() => deleteItem(item.id)}>Delete</Button>
+                    <Button  width="70" marginX="5" marginBottom="2" onPress={() => navigation.navigate("Edit")}>Edit</Button>
+                </View>
+              </View>
+              
             </View>
+            
           )}
         />
-      )
+      
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="600" minWidth="350">
           <Modal.CloseButton />
@@ -110,8 +162,7 @@ const HomeScreen = ({ route, navigation }) => {
         </Modal.Content>
       </Modal>
     </Box>
-  );
-};
+  )};
 
 export default HomeScreen;
 
@@ -124,6 +175,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    
   },
 
   items: {
@@ -136,4 +188,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
   },
+
+  itemContainer : {
+
+    flex: 1,
+    
+    //backgroundColor: "lightgreen"
+
+  }
 });

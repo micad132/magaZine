@@ -19,4 +19,4 @@ const db = getFirestore();
 const colref = collection(db, "Inventory");
 const storage = getStorage();
 
-export { auth, colref, storage };
+export { auth, colref, storage,db };
