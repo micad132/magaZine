@@ -13,7 +13,7 @@ const HomeScreen = ({ route, navigation }) => {
   const [items, setItems] = useState([]);
   const [ifAdd, setIfAdd] = useState(true);
   const [refresh,setRefresh] = useState(false);
-  
+  //const {mail,mail2} = route.params;
 
  const deleteItem = (id) => {
 
@@ -89,7 +89,7 @@ const HomeScreen = ({ route, navigation }) => {
         fontWeight="bold"
         fontSize="xl"
       >
-        Hello {"user"}! You are logged in.{" "}
+        Hello  You are logged in.{" "}
       </Text>
       <Text color="#fff" textAlign="center" fontSize="16">
         {" "}
@@ -129,7 +129,7 @@ const HomeScreen = ({ route, navigation }) => {
                 </TouchableOpacity>
                 <View style={{flex: 1, flexDirection: "row" }}>
                     <Button  width="70"  marginX="5" marginBottom="2" onPress={() => deleteItem(item.id)}>Delete</Button>
-                    <Button  width="70" marginX="5" marginBottom="2" onPress={() => navigation.navigate("Edit")}>Edit</Button>
+                    <Button  width="70" marginX="5" marginBottom="2" onPress={() => navigation.navigate("Edit", { itemId : item.id})}>Edit</Button>
                 </View>
               </View>
               

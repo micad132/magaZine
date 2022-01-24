@@ -40,7 +40,7 @@ const LoginScreen = ({ navigation }) => {
   }, []);
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => navigation.navigate("DrawerScreen"))
+      .then(() => navigation.navigate("DrawerScreen",{mail: email , mail2 : "witam"}))
       .catch((error) => {
         switch (error.code) {
           case "auth/invalid-email":
