@@ -24,8 +24,9 @@ const ProfileScreen = ({ navigation, route }) => {
     signOut(auth)
       .then(() => {
         console.log("Wylogowano");
-        setName('');
-        setUser('');
+        setName("");
+        setUser("");
+        setLogOut(true);
         navigation.navigate("Login");
       })
       .catch((error) => {
@@ -60,7 +61,7 @@ const ProfileScreen = ({ navigation, route }) => {
   return (
     <Box w="100%" h="100%" bgColor="rgb(41,54,63)">
       <Avatar mt={20} bg="pink.600" alignSelf="center" size="xl">
-        {user && <Text>{user.displayName}</Text>}
+        {user && <Text>{name}</Text>}
       </Avatar>
       <VStack space={4} alignItems="center">
         <Heading color="#fff" textAlign="center" mb="10">
