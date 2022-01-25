@@ -10,20 +10,13 @@ import {
 import React, { useState, useEffect } from "react";
 import { auth, colref, db } from "../../../firebase";
 import { getDocs, deleteDoc, doc } from "firebase/firestore";
-import {
-  alignItems,
-  backgroundColor,
-  justifyContent,
-  marginBottom,
-} from "styled-system";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
-import Edit from "./index";
+
+
 
 const HomeScreen = ({ route, navigation }) => {
   const [showModal, setShowModal] = useState(false);
   const [itemData, setItemData] = useState({});
   const [items, setItems] = useState([]);
-  const [ifAdd, setIfAdd] = useState(true);
   const [refresh, setRefresh] = useState(false);
 
   const deleteItem = (id) => {

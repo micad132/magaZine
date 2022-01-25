@@ -34,6 +34,7 @@ const AddingScreen = ({ navigation }) => {
       const response = await fetch(image.uri);
       const blob = await response.blob();
       console.log(response);
+      
       const metadata = {
         contentType: `image/${fileExt}`,
       };
